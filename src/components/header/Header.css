@@ -1,0 +1,87 @@
+/* ---------- CABECALHO ---------- */
+header {
+    background-color: var(--corPrincipal);
+    font-family: var(--fontHanken);
+}
+
+.header_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 120px;
+}
+
+.box_busca {
+    position: relative;
+}
+
+.box_busca svg {
+    width: 20px;
+    position: absolute;
+    fill: #747878;
+}
+
+.box_busca input {
+    padding-left: 25px;
+    padding-bottom: 5px;
+    background-color: transparent;
+    border: none;
+    border-bottom: solid 1px #747878;
+    font-size: 20px;
+}
+
+.box_busca input:focus {
+    outline: none;
+}
+
+.link_inicio {
+    color: #CCCCCC;
+    text-decoration: none;
+    font-size: 20px;
+    position: relative;
+    text-align: center;
+}
+
+.link_inicio span {
+    color: #444444;
+    position: absolute;
+    left: -5px;
+    top: 8px;
+}
+
+.link_inicio hr {
+    margin-top: 7px;
+    width: 100px;
+    background-color: var(--corDourado);
+    border: none;
+    height: 1px;
+}
+
+
+/* ---------- BOTAO MENU ---------- */
+.header_container button {
+    background-color: transparent;
+    border: none;
+    display: none;
+}
+
+.header_container button svg {
+    width: 50px;
+}
+
+
+
+
+
+@media screen and (max-width: 768px) {
+
+    /* ----- CABECALHO ----- */
+    .header_container button {
+        display: block;
+    }
+
+    .link_inicio,
+    .box_busca {
+        display: none;
+    }
+}
