@@ -1,11 +1,28 @@
 import './header.css';
-
+import logo from '../../assets/img/logo.svg';
 function Header(){
+                                                                                                                                           
+function ExpRecMenu() {
+    const header = document.querySelector('header'); // Ou o container do menu
+
+    if(!header)return;
+
+    // 1. Ativa a animação temporariamente
+    header.classList.add('animando');
+
+    // 2. Alterna a classe que abre/fecha o menu
+    header.classList.toggle('menu_aberto');
+
+    // 3. Remove a classe de animação assim que o efeito de 0.25s terminar
+    setTimeout(() => {
+        header.classList.remove('animando');
+    }, 250);
+}
 
 return(
       <header>
         <div className="container header_container">
-            <img src="../img/logo.svg" alt="logo bolos do Jacquin"/>
+            <img src={logo} alt="logo bolos do Jacquin"/>
 
             <div className="box_busca">
                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -22,7 +39,7 @@ return(
                 <hr/>
             </a>
 
-            <button onclick="ExpRecMenu()">
+            <button onClick={ExpRecMenu}>
                 <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000"
                     preserveAspectRatio="xMidYMid meet">
 
