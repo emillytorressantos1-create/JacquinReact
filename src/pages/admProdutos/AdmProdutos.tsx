@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Dialog from '../../components/dialog/dialog';
 import './AdmProdutos.css'
-import { Button } from 'react-bootstrap';
+import icon from '../../assets/img/icon_jacquin.png'
 
 function AdmProdutos() {
 
@@ -18,7 +18,7 @@ function AdmProdutos() {
       <h1>Pagina administrativa - bolos do Jacquin</h1>
       <section className="cad_produtos">
         <div className="container cad_container">
-          <img className="icon_jacquin" src="../img/icon_jacquin.png" alt="" />
+          <img className="icon_jacquin" src={icon} alt="" />
           <div className="box_h2">
             <h2>Cadastro de Produtos</h2>
             <span>Enregistrement du Produit</span>
