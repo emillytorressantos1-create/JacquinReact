@@ -1,17 +1,23 @@
 import './Detproduto.css'
-import produto from '../../assets/img/produtos/opera_eternelle.png'
+import produtos from '../../assets/img/produtos/opera_eternelle.png'
 import opera from '../../assets/img/produtos/opera_eternelle.png'
 import jacquin from '../../assets/img/icon_jacquin.png'
+import { useParams } from 'react-router-dom'
+import { useState } from 'react'
+import type { Produto } from '../../types/Produto'
 
 
 function DetProduto() {
+    const { id } = useParams();
+    const produtoId = Number(id);
+    const [produto, setProduto] = useState<Produto | null>(null);
     return (
         <main>
             <h1>informações do produto</h1>
             <section className="container container_det_prod">
                 <img
                     className="img_prod_web"
-                    src={produto}
+                    src={produtos}
                     alt="foto do produto"
                 />
                 <div className="box_det_prod">
