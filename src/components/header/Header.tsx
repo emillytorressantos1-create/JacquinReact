@@ -1,54 +1,67 @@
 import './header.css';
 import logo from '../../assets/img/logo.svg';
-import { Link } from 'react-router-dom';
-function Header(){
-                                                                                                                                           
-function ExpRecMenu() {
-    const header = document.querySelector('header'); // Ou o container do menu
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+function Header() {
+    const navigate = useNavigate();
+    const [busca, setBusca] = useState('');
+    function ExpRecMenu() {
+        const header = document.querySelector('header'); // Ou o container do menu
 
-    if(!header)return;
+        if (!header) return;
 
-    // 1. Ativa a animação temporariamente
-    header.classList.add('animando');
+        // 1. Ativa a animação temporariamente
+        header.classList.add('animando');
 
-    // 2. Alterna a classe que abre/fecha o menu
-    header.classList.toggle('menu_aberto');
+        // 2. Alterna a classe que abre/fecha o menu
+        header.classList.toggle('menu_aberto');
 
-    // 3. Remove a classe de animação assim que o efeito de 0.25s terminar
-    setTimeout(() => {
-        header.classList.remove('animando');
-    }, 250);
-}
+        // 3. Remove a classe de animação assim que o efeito de 0.25s terminar
+        setTimeout(() => {
+            header.classList.remove('animando');
+        }, 250);
+    }
 
-return(
-      <header>
-        <div className="container header_container">
-            <Link to="/login">
-            <img src={logo} alt="logo bolos do Jacquin"/>
-            </Link>
+    return (
+        <header>
+            <div className="container header_container">
+                <Link to="/login">
+                    <img src={logo} alt="logo bolos do Jacquin" />
+                </Link>
 
-            <div className="box_busca">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 640 640">
-                    <path
-                        d="M480 272C480 317.9 465.1 360.3 440 394.7L566.6 521.4C579.1 533.9 579.1 554.2 566.6 566.7C554.1 579.2 533.8 579.2 521.3 566.7L394.7 440C360.3 465.1 317.9 480 272 480C157.1 480 64 386.9 64 272C64 157.1 157.1 64 272 64C386.9 64 480 157.1 480 272zM272 416C351.5 416 416 351.5 416 272C416 192.5 351.5 128 272 128C192.5 128 128 192.5 128 272C128 351.5 192.5 416 272 416z" />
-                </svg>
-                <input type="text" id="busca" placeholder="Buscar Doçuras..."/>
-            </div>
+                <form className="box_busca"
+                    onSubmit={evento => {
+                        evento.preventDefault();
+                        navigate(`/produtos?q=${encodeURIComponent(busca.trim())}`);
+                    }
+                    }
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 640 640">
+                        <path
+                            d="M480 272C480 317.9 465.1 360.3 440 394.7L566.6 521.4C579.1 533.9 579.1 554.2 566.6 566.7C554.1 579.2 533.8 579.2 521.3 566.7L394.7 440C360.3 465.1 317.9 480 272 480C157.1 480 64 386.9 64 272C64 157.1 157.1 64 272 64C386.9 64 480 157.1 480 272zM272 416C351.5 416 416 351.5 416 272C416 192.5 351.5 128 272 128C192.5 128 128 192.5 128 272C128 351.5 192.5 416 272 416z" />
+                    </svg>
+                    <input
+                        type="search"
+                        id="busca"
+                        placeholder="Buscar Doçuras..."
+                        value={busca} onChange={evento => setBusca(evento.target.value)} />
 
-            <Link className="link_inicio" to="/">
-                Início
-                <span>Commencer</span>
-                <hr/>
-            </Link>
+                </form>
 
-            <button onClick={ExpRecMenu}>
-                <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000"
-                    preserveAspectRatio="xMidYMid meet">
+                <Link className="link_inicio" to="/">
+                    Início
+                    <span>Commencer</span>
+                    <hr />
+                </Link>
 
-                    <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#000000"
-                        stroke="none">
-                        <path d="M3340 4778 c-94 -41 -152 -73 -185 -101 -176 -149 -261 -334 -285
+                <button onClick={ExpRecMenu}>
+                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000"
+                        preserveAspectRatio="xMidYMid meet">
+
+                        <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#000000"
+                            stroke="none">
+                            <path d="M3340 4778 c-94 -41 -152 -73 -185 -101 -176 -149 -261 -334 -285
 -621 -6 -72 -15 -125 -22 -132 -7 -7 -50 -18 -95 -23 -145 -18 -269 -93 -328
 -199 -38 -68 -56 -173 -44 -256 13 -98 18 -113 55 -191 131 -270 451 -379 732
 -249 205 94 341 347 304 565 -33 194 -175 313 -397 334 -38 4 -76 12 -82 17
@@ -56,10 +69,10 @@ return(
 24 -80 8z m-210 -1003 c165 -46 230 -124 230 -276 0 -152 -70 -278 -203 -363
 -78 -50 -140 -70 -222 -70 -189 -2 -350 113 -420 299 -27 71 -25 206 2 260 63
 123 203 178 433 170 69 -2 149 -11 180 -20z" />
-                        <path d="M3002 3634 c-22 -15 -29 -49 -14 -70 4 -5 24 -20 45 -33 20 -12 38
+                            <path d="M3002 3634 c-22 -15 -29 -49 -14 -70 4 -5 24 -20 45 -33 20 -12 38
 -30 38 -39 1 -9 3 -32 5 -50 3 -43 20 -62 55 -62 59 0 81 56 54 136 -19 57
 -63 106 -108 123 -38 15 -49 14 -75 -5z" />
-                        <path d="M3673 3610 c-36 -15 -32 -71 8 -104 17 -14 34 -26 39 -26 9 0 140
+                            <path d="M3673 3610 c-36 -15 -32 -71 8 -104 17 -14 34 -26 39 -26 9 0 140
 -87 270 -180 139 -99 420 -353 420 -380 0 -5 -10 -12 -22 -14 -34 -6 -342 -48
 -528 -72 -63 -8 -162 -21 -220 -29 -58 -8 -157 -21 -220 -29 -63 -8 -180 -24
 -260 -36 -80 -12 -197 -28 -260 -36 -63 -8 -162 -20 -220 -28 -58 -8 -143 -19
@@ -125,12 +138,12 @@ return(
 87 6 145 15 58 8 166 21 240 30 74 8 173 20 220 26 47 6 123 15 170 20 47 5
 137 15 200 23 111 14 233 29 505 60 72 9 166 20 210 26 44 6 127 15 185 21 58
 5 125 14 150 18 80 15 97 13 104 -11z" />
-                    </g>
-                </svg>
-            </button>
-        </div>
-    </header>
-)
+                        </g>
+                    </svg>
+                </button>
+            </div>
+        </header>
+    )
 
 }
 

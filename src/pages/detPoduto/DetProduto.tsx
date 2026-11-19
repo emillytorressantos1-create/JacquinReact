@@ -1,61 +1,79 @@
 import './Detproduto.css'
-import produtos from '../../assets/img/produtos/opera_eternelle.png'
-import opera from '../../assets/img/produtos/opera_eternelle.png'
-import jacquin from '../../assets/img/icon_jacquin.png'
-import { useParams } from 'react-router-dom'
-import { useState } from 'react'
+// import jacquin from '../../assets/img/icon_jacquin.png'
+import { Link, useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import type { Produto } from '../../types/Produto'
+import produtoService from '../../services/produtoService'
 
 
 function DetProduto() {
     const { id } = useParams();
     const produtoId = Number(id);
     const [produto, setProduto] = useState<Produto | null>(null);
+    const [erro, SetErro] = useState("");
+
+    useEffect(() => {
+        if (!Number.isInteger(produtoId) || produtoId < 1) return;
+        produtoService.buscar(produtoId)
+            .then(item => setProduto(item))
+            .catch(() => SetErro("Produto não encontrado"));
+    }, [produtoId]);
+
+    
+    if (!Number.isInteger(produtoId) || produtoId < 1) return (
+        <main className='container'><p>Produto inválido.</p></main>
+    )
+
+    if (!produto) return (
+        <main className='container'><p>{erro || 'carregando produto...'}</p></main>
+    )
+
+    const imagem = `http://localhost:3000/${produto.imagem}`
+    console.log(produto);
+    
+
     return (
         <main>
             <h1>informações do produto</h1>
             <section className="container container_det_prod">
                 <img
                     className="img_prod_web"
-                    src={produtos}
-                    alt="foto do produto"
+                    src={imagem}
+                    alt={produto.nome}
                 />
                 <div className="box_det_prod">
-                    <a className="link_voltar" href="../home/index.html">
+                    < Link className="link_voltar" to='/produtos'>
                         Voltar
                         <span>Retourner</span>
-                    </a>
+                    </Link>
                     <div className="info_sub_titulo">
-                        <h2>Opera Éternelle</h2>
+                        <h2>{produto.nome}</h2>
                         <hr />
                         <img
                             className="img_prod_mobile"
-                            src={opera}
-                            alt="foto do produto"
+                            src={imagem}
+                            alt={produto.nome}
                         />
                     </div>
-                    <p className="info_nota">
-                        Nota: 9.9 <span className="info_aval">(24 Avaliações)</span>
-                    </p>
+
                     <p className="info_desc">
-                        Um ícone da patisserie francesa, o Gâteau Opéra é uma celebração de
-                        texturas e sabores intensos. Composto por camadas finíssimas de biscuit
-                        joconde embebido em xarope de café, entrelaçadas com um sedoso creme de
-                        manteiga de café e ganache de chocolate belga 70%. Cada fatia é uma
-                        viagem sensorial à Belle Époque de Paris.
+                        {produto.descricaoLonga}
                     </p>
                     <div className="info_box_valor">
                         <p>
-                            preço por quilo <span className="info_valor">R$ 185,00</span>
+                            preço por quilo <span className="info_valor">
+                                {produto.precoPorKg.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                            </span>
                         </p>
                         <hr />
                     </div>
-                    <a className="info_botao" href="#">
+                    <a className="info_botao" href={`https://wa.me/551140028922?text=Ol%C3%A1!%20Vim%20pelo%20link%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es.text=${encodeURIComponent(`Olá, gostaria de encomendar ${produto.nome}`)}`}
+                    target='_blank'>
                         encomendar agora
                     </a>
                 </div>
             </section>
-            <section className="container_avaliacao">
+            {/* <section className="container_avaliacao">
                 <div className="container">
                     <img src={jacquin} alt="icone Jacquin" />
                     <div className="box_h2">
@@ -120,7 +138,7 @@ function DetProduto() {
                         </ul>
                     </div>
                 </div>
-            </section>
+            </section> */}
         </main>
     )
 }
