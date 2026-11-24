@@ -8,3 +8,5 @@ ativo: boolean;
 imagem: string;
 categoriaIds: number[]
 }
+
+export type produtoRequest = Omit<Produto, 'id'>

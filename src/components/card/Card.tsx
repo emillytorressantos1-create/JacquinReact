@@ -32,12 +32,12 @@ function Card({ id, chocolate, nome, descricao, valor, quantidadedeAvaliacoes, n
       </p>
       <p className="card_rodape">
         <data value={valor}>R$ {valor} / kg</data>
-        <span className="card_av">
+        {/* <span className="card_av">
           <img src={iconeUsuario} alt="icone de usuarios" />
           <data value={quantidadedeAvaliacoes}>{quantidadedeAvaliacoes}</data>
           <img src={iconeEstrela} alt="icone de estrela" />
           <data value={nota}>{nota}</data>
-        </span>
+        </span> */}
       </p>
     </article>
   )

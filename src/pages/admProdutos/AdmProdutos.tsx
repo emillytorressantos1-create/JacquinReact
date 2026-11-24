@@ -1,12 +1,46 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Dialog from '../../components/dialog/dialog';
 import './AdmProdutos.css'
 import icon from '../../assets/img/icon_jacquin.png'
+import type { Produto, produtoRequest } from '../../types/Produto';
+import type { Categoria } from '../../types/Categoria';
+import produtoService from '../../services/produtoService';
+import categoriaService from '../../services/categoriaService';
+
+const formularioVazio: produtoRequest = {
+  nome: '',
+  descricaoCurta: '',
+  descricaoLonga: '', 
+  precoPorKg:0,
+  ativo: true,
+  imagem:'',
+  categoriaIds: []
+}
 
 function AdmProdutos() {
+const [produtos, setProdutos] = useState<Produto[]>([]);
+const [categorias, setCategorias] = useState<Categoria[]>([]);
+const [formulario, setFormulario] = useState<produtoRequest>(formularioVazio);
+const [arquivo, setArquivo] = useState<File | null>(null);
+const [editandoId, setEditandoId] = useState<number | null>(null);
+const [excluindo, setExcluindo] = useState<Produto | null>(null);
+const [erro, setErro] = useState('');
+const [mensagem, setMensagem] = useState('');
+const [salvando, setSalvando] = useState(false);
 
-  const [mostrar, setMostar] = useState(false)
+useEffect(() => {
+  if(!sessionStorage.getItem('token')) return;
+  Promise.all([produtoService.listar(), categoriaService.listar()])
+  .then(([lista, categoriasAPI]) => {
+    setProdutos(lista);
+    setCategorias(categoriasAPI);
+  }) 
+.catch(() => setErro("Não foi possivel carregar os dados."))
+  })
+
+ const [mostrar, setMostar] = useState(false);
+
   const aoFechar = () => setMostar(false)
 
   const aoConfirmar = () => {
